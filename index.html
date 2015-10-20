@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://apis.google.com/js/api.js?onload=onApiLoad"></script>
+    <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
+  
+    <link data-require="bootstrap-css@*" data-semver="3.3.5" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />
+    
+    <?!= include('style'); ?>
+    
+  </head>
+  
+  
+  
+  <body>
+  
+    <!-- navigation -->
+    <div><?!= include('navbar'); ?></div>
+    
+    <!-- Load Bar -->
+    <div class="load-bar" style="display:none;">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    
+    <div class="container-fluid">
+    
+      <div class="row text-center">
+        <h1 class="text-nvBlue">Audit Report File Renamer</h1>
+      </div>
+                  
+      <!-- Home Page -->
+      <div class="page" id="index">
+        <div class="vertical-center">
+          <h3 class="text-nvRed">Clicking the button below will rename your changed files!</h3>
+          <div class="text-center">
+            <button type="button" class="btn btn-primary btn-lg" id="runBtn">Rename Files</button>
+          </div>
+        </div>
+      </div>
+        
+      <!-- Confirmation Page -->
+      <div class="page" id="confirmation" style="display:none"></div>
+        
+    </div>
+  
+  </body>
+</html>
+
+
+
+<script>
+  $(function(){
+
+    $('#runBtn').click(function(){
+      $('.load-bar').show();
+      google.script.run.withSuccessHandler(confirmResults).renameFiles();
+    });
+    
+    function confirmResults(resultHtml){
+      var $output = $('#confirmation');
+      $output.html(resultHtml);
+      $('.page').hide();
+      $output.show();
+      $('.load-bar').hide();
+    }
+    
+  });
+</script>
